@@ -22,13 +22,21 @@ def load_embeddings():
 embeddings = load_embeddings()
 
 # -------- Load FAISS Indexes --------
-constitutional_index = FAISS.load_local(
-    "indexes/faiss_constitutional_index", embeddings, allow_dangerous_deserialization=True
-)
-statutory_index = FAISS.load_local(
-    "indexes/faiss_statutory_index", embeddings, allow_dangerous_deserialization=True
-)
+@st.cache_resource
+def load_indexes(embeddings):
+    const_index = FAISS.load_local(
+        "indexes/faiss_constitutional_index",
+        embeddings,
+        allow_dangerous_deserialization=True
+    )
+    stat_index = FAISS.load_local(
+        "indexes/faiss_statutory_index",
+        embeddings,
+        allow_dangerous_deserialization=True
+    )
+    return const_index, stat_index
 
+constitutional_index, statutory_index = load_indexes(embeddings)
 # -------- Retrieval --------
 def retrieve_docs(index, query, k=5, score_threshold=0.4):
     docs_with_scores = index.similarity_search_with_score(query, k=k)

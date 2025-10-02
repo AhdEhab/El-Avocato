@@ -116,7 +116,7 @@ def query_legal_assistant(query):
 # -------- Streamlit UI --------
 st.set_page_config(page_title="Legal AI Assistant", page_icon="⚖️", layout="wide")
 
-st.image("\logo.jpg", width=250) 
+st.image("logo.jpg", width=250) 
 st.write("اسأل سؤالاً قانونياً وسيتم استخراج النصوص الدستورية والتشريعية ذات الصلة.")
 
 query = st.text_area("📝 أدخل سؤالك:", placeholder="مثال: ما هي الإجراءات المطلوبة لتقديم طلب إخلاء سبيل متهم؟")
